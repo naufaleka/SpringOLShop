@@ -31,6 +31,7 @@ public class ProductController {
         if (session.getAttribute("user") != null) {
             List<Prodcut> product = dao.findAll();
             model.addAttribute("products", product);
+            session.removeAttribute("stlBayar");
             return "product";
         }
         return "Errors";

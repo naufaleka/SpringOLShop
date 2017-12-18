@@ -23,6 +23,7 @@
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Total Price</th>
+                <th>Action</th>
             </tr>
             <c:forEach var="p" items="${produk}">
                 <tr>
@@ -32,16 +33,18 @@
                     <td>${p.price}</td>
                     <td>${p.jumlahBeli}</td>
                     <td align="right"><b>Rp. ${p.jumlahBeli * p.price}</b></td>
+                    <td align="center"><a href="${pageContext.request.contextPath}/order/delete/${p.idBarang}" class="btn btn-default">Delete</a></td>
                 <p hidden="true">${hitung = hitung + p.jumlahBeli * p.price}</p>
                 </tr>
             </c:forEach>
                 <tr style="font-size: 18px;">
-                    <td colspan="5" align="right"><b>Total Bayar</b></td>
+                    <td colspan="6" align="right"><b>Total Bayar</b></td>
                 <td align="right"><b>Rp. ${hitung}</b></td>
             </tr>
             <tr>
-                <td colspan="6">
-                    <a href="${pageContext.request.contextPath}/products" class="btn btn-default" style="float: right;">Kembali Belanja</a>
+                <td colspan="7">
+                    <a href="${pageContext.request.contextPath}/products" class="btn btn-default">Kembali Belanja</a>
+                    <a href="${pageContext.request.contextPath}/order/bayar" class="btn btn-default" style="float: right;">Bayar</a>
                 </td>
             </tr>
         </table>

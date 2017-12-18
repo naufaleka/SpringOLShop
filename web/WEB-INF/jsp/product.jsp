@@ -12,6 +12,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Product</title>
         <link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
+        <script>
+            var x = '${stlBayar}';
+            if (x.length > 0) {
+                alert('${stlBayar}');
+            }
+        </script>
     </head>
     <body>
         <div class="jumbotron">
