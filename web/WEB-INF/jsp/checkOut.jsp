@@ -47,6 +47,6 @@
                     <a href="${pageContext.request.contextPath}/order/bayar" class="btn btn-default" style="float: right;">Bayar</a>
                 </td>
             </tr>
-        </table>
+    </table><br/>
     </body>
 </html>
