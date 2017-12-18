@@ -17,7 +17,7 @@
         <div class="jumbotron">
             <h1>Hello ${user}</h1>
             <a href="${pageContext.request.contextPath}/welcome/logout" class="btn btn-primary" style="margin-right: 25px; float: right;"/>Logout</a>
-        <a href="#"><img src="<c:url value="/resources/image/cart.png"/>" style="width: 40px; height: 40px; margin-right: 50px; margin-top: -4px; float: right;"/><b style=" font-size: 25px; margin-right: -55px; float: right;">${cart}</b></a>
+        <a href="${pageContext.request.contextPath}/order/checkOut"><img src="<c:url value="/resources/image/cart.png"/>" style="width: 40px; height: 40px; margin-right: 50px; margin-top: -4px; float: right;"/><b style=" font-size: 25px; margin-right: -55px; float: right;">${cart}</b></a>
     </div>
     <div style="margin-left: 20px;"><h2>Produk Di Toko Kami</h2></div>
     <div style="margin-left: 20px; margin-right: 20px;">

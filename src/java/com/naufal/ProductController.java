@@ -30,9 +30,6 @@ public class ProductController {
     public String showAllProduct(HttpSession session, Model model) {
         if (session.getAttribute("user") != null) {
             List<Prodcut> product = dao.findAll();
-            for (Prodcut prodcut : product) {
-                System.out.println("Product Name " + prodcut.getProductName());
-            }
             model.addAttribute("products", product);
             return "product";
         }
