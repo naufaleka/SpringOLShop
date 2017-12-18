@@ -21,7 +21,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "DataProduct")
 @NamedQueries({
-    @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Prodcut p")})
+    @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Prodcut p"),
+    @NamedQuery(name = "Product.findById", query = "SELECT p FROM Prodcut p Where p.id = :productID")
+})
 public class Prodcut implements Serializable {
 
     private static final long serialVersionUID = 1L;

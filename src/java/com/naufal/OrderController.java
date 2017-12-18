@@ -11,6 +11,7 @@ import com.naufal.model.Prodcut;
 import com.naufal.model.ProductModel;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 import javax.servlet.http.HttpSession;
@@ -36,11 +37,14 @@ public class OrderController {
         if (session.getAttribute("user") != null) {
             Map<Integer, OrderList> cartItems = new HashMap<>();
             if (session.getAttribute("cart").equals(0)) {
-                cartItems.put(produkId, new OrderList(produkId, 1, new Date().toString(), session.getAttribute("user").toString()));
+                List<Prodcut> pro = dao.findByIds(produkId);
+                for (Prodcut p : pro) {
+                    cartItems.put(produkId, new OrderList(p.getId(), p.getProductName(), p.getPicture(), p.getProductPrice(), 1, new Date().toString(), session.getAttribute("user").toString()));
+                }
                 session.setAttribute("cart", 1);
                 session.setAttribute("temp", cartItems);
                 for (OrderList obj : cartItems.values()) {
-                    System.out.println("Masuk Proses Awal" + obj.getJumlahBeli());
+                    System.out.println("Masuk Proses Awal : " + obj.getJumlahBeli());
                 }
                 return "redirect:/products";
             } else {
@@ -48,25 +52,28 @@ public class OrderController {
                 if (cartItems.get(produkId) == null) {
                     System.out.println("Masuk Kalo ID KOSONG");
                     int x = (int) session.getAttribute("cart");
-                    Map<Integer, OrderList> ord = (Map<Integer, OrderList>) session.getAttribute("temp");
                     Map<Integer, OrderList> baru = new HashMap<>();
-                    baru.put(produkId, new OrderList(produkId, 1, new Date().toString(), session.getAttribute("user").toString()));
-                    cartItems.putAll(ord);
-                    cartItems.putAll(baru);
+                    List<Prodcut> pro = dao.findByIds(produkId);
+                    for (Prodcut p : pro) {
+                        baru.put(produkId, new OrderList(p.getId(), p.getProductName(), p.getPicture(), p.getProductPrice(), 1, new Date().toString(), session.getAttribute("user").toString()));
+                    }
+                    cartItems.putAll(baru); // untuk menggabung dari isi data sebelumnya
                     session.setAttribute("cart", x + 1);
                     session.setAttribute("temp", cartItems);
                     return "redirect:/products";
                 } else if (cartItems.get(produkId).getIdBarang() == produkId) {
                     System.out.println("Masuk Kalo IDnya sama");
                     int x = (int) session.getAttribute("cart");
-                    Map<Integer, OrderList> ord = (Map<Integer, OrderList>) session.getAttribute("temp");
-                    OrderList ordersebelumnya = new OrderList(ord.get(produkId).getIdBarang(), ord.get(produkId).getJumlahBeli(), ord.get(produkId).getTglPembelian(), ord.get(produkId).getPembeli());
                     int beli = 0;
                     for (OrderList obj : cartItems.values()) {
-                        beli = obj.getJumlahBeli()+1;
+                        if (obj.getIdBarang() == produkId) {
+                            beli = obj.getJumlahBeli() + 1;
+                        }
                     }
-                    System.out.println("Jumlah Belinya "+beli);
-                    cartItems.replace(produkId, ordersebelumnya, new OrderList(produkId, beli, new Date().toString(), session.getAttribute("user").toString()));
+                    List<Prodcut> pro = dao.findByIds(produkId);
+                    for (Prodcut p : pro) {
+                        cartItems.put(produkId, new OrderList(p.getId(), p.getProductName(), p.getPicture(), p.getProductPrice(), beli, new Date().toString(), session.getAttribute("user").toString()));
+                    }
                     session.setAttribute("cart", x + 1);
                     session.setAttribute("temp", cartItems);
                     return "redirect:/products";
@@ -79,8 +86,9 @@ public class OrderController {
     @RequestMapping(value = "checkOut")
     public String checkOut(HttpSession session, Model model) {
         if (session.getAttribute("user") != null) {
-            Map<Integer, OrderList> cartItems = (Map<Integer, OrderList>) session.getAttribute("temp");
-            System.out.println("Cart Items" + cartItems.values());
+            Map<Integer, OrderList> cartItems = new HashMap<>();
+            cartItems = (Map<Integer, OrderList>) session.getAttribute("temp");
+            model.addAttribute("produk", cartItems.values());
             for (OrderList obj : cartItems.values()) {
                 System.out.println("ID Barang : " + obj.getIdBarang());
                 System.out.println("Jumlah Beli : " + obj.getJumlahBeli());
@@ -88,6 +96,6 @@ public class OrderController {
                 System.out.println("Nama Pembeli : " + obj.getPembeli());
             }
         }
-        return "redirect:/products";
+        return "checkOut";
     }
 }

@@ -10,7 +10,11 @@ package com.naufal.model;
  * @author user
  */
 public class OrderList {
+
     private int idBarang;
+    private String productName;
+    private String image;
+    private double price;
     private int jumlahBeli;
     private String tglPembelian;
     private String pembeli;
@@ -18,12 +22,16 @@ public class OrderList {
     public OrderList() {
     }
 
-    public OrderList(int idBarang, int jumlahBeli, String tglPembelian, String pembeli) {
+    public OrderList(int idBarang, String productName, String image, double price, int jumlahBeli, String tglPembelian, String pembeli) {
         this.idBarang = idBarang;
+        this.productName = productName;
+        this.image = image;
+        this.price = price;
         this.jumlahBeli = jumlahBeli;
         this.tglPembelian = tglPembelian;
         this.pembeli = pembeli;
     }
+
 
     /**
      * @return the idBarang
@@ -81,5 +89,46 @@ public class OrderList {
         this.pembeli = pembeli;
     }
 
-    
+    /**
+     * @return the productName
+     */
+    public String getProductName() {
+        return productName;
+    }
+
+    /**
+     * @param productName the productName to set
+     */
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    /**
+     * @return the image
+     */
+    public String getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    /**
+     * @return the price
+     */
+    public double getPrice() {
+        return price;
+    }
+
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
 }

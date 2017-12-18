@@ -18,7 +18,7 @@
             <h1 style="margin-top: -35px;">${user}</h1>
             <div style="margin-right: 25px; float: right; margin-top: -35px;">
                 <a href="${pageContext.request.contextPath}/welcome/logout" class="btn btn-primary" style="margin-right: 25px; float: right;"/>Logout</a>
-                <a href="#"><img src="<c:url value="/resources/image/cart.png"/>" style="width: 40px; height: 40px; margin-right: 50px; margin-top: -4px; float: right;"/><b style=" font-size: 25px; margin-right: -55px; float: right;">0</b></a>
+                <a href="${pageContext.request.contextPath}/order/checkOut"><img src="<c:url value="/resources/image/cart.png"/>" style="width: 40px; height: 40px; margin-right: 50px; margin-top: -4px; float: right;"/><b style=" font-size: 25px; margin-right: -55px; float: right;">${cart}</b></a>
             </div>
         </div>
         <div style="width:750px; margin:auto;">
@@ -27,14 +27,14 @@
                     <th colspan="2"><h1 style="margin: auto;">${produk.productName}</h1></th>
                 </tr>
                 <tr>
-                    <td><img src="<c:url value="/resources/image/${produk.picture}"/>" width="100%" height="100%"/></td>
+                    <td align="center"><img src="<c:url value="/resources/image/${produk.picture}"/>" width="100%" height="100%"/></td>
                     <td style="width: 450px;"><b style="font-size: 18px;">Deskripsi : </b><br/>${produk.description}</td>
                 </tr>
                 <tr>
                     <td colspan="2"><b style="float: right;">Rp. ${produk.productPrice}</b></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><a href="${pageContext.request.contextPath}/products" class="btn btn-default"/>Kembali</a><a href="${pageContext.request.contextPath}/${produk.id}" class="btn btn-default ico" style="float: right;">add to cart&nbsp;</a></td>
+                    <td colspan="2"><a href="${pageContext.request.contextPath}/products" class="btn btn-default"/>Kembali</a><a href="${pageContext.request.contextPath}/order/${produk.id}" class="btn btn-default ico" style="float: right;">add to cart&nbsp;</a></td>
                 </tr>
             </table>
         </div>
