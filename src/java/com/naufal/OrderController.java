@@ -100,39 +100,39 @@ public class OrderController {
     @RequestMapping(value = "/delete/{idProduk}")
     public String Delete(HttpSession session, @PathVariable Integer idProduk, Model model) {
         String link = "";
-        Map<Integer, OrderList> list = new HashMap<>();
-        list = (Map<Integer, OrderList>) session.getAttribute("temp");
+        Map<Integer, OrderList> list = (Map<Integer, OrderList>) session.getAttribute("temp");
         int beli = 0;
         int cart = 0;
         if (list.values() != null) {
             for (OrderList obj : list.values()) {
                 if (obj.getIdBarang() == idProduk) {
-                    if (obj.getJumlahBeli() > 1) {
-                        if (list.get(idProduk).getJumlahBeli() == 1) {
-                            list.remove(idProduk);
-                            cart = (int) session.getAttribute("cart");
-                            cart--;
-                            session.setAttribute("cart", cart);
-                            link = "redirect:/order/checkOut";
-                        } else {
-                            beli = list.get(idProduk).getJumlahBeli() - 1;
-                            cart = (int) session.getAttribute("cart");
-                            cart--;
-                            session.setAttribute("cart", cart);
-                            list.replace(idProduk, new OrderList(obj.getIdBarang(), obj.getProductName(), obj.getImage(), obj.getPrice(), beli, obj.getTglPembelian(), obj.getPembeli()));
-                            link = "redirect:/order/checkOut";
-                        }
-                    } else {
+                    if (list.get(idProduk).getJumlahBeli() == 1) {
+                        System.out.println("<script>Alert('Masuk Ke Remove...');</script>");
+                        list.remove(idProduk);
                         cart = (int) session.getAttribute("cart");
                         cart--;
                         session.setAttribute("cart", cart);
-                        list.remove(idProduk);
-                        link = "redirect:/products";
+                        if ((int) session.getAttribute("cart") != 0) {
+                            link = "redirect:/order/checkOut";
+                        } else {
+                            link = "redirect:/products";
+                        }
+                        break;
+                    } else {
+                        System.out.println("<script>Alert('Masuk Ke Replace...');</script>");
+                        beli = list.get(idProduk).getJumlahBeli() - 1;
+                        cart = (int) session.getAttribute("cart");
+                        cart--;
+                        session.setAttribute("cart", cart);
+                        list.replace(idProduk, new OrderList(obj.getIdBarang(), obj.getProductName(), obj.getImage(), obj.getPrice(), beli, obj.getTglPembelian(), obj.getPembeli()));
+                        link = "redirect:/order/checkOut";
                     }
                 }
             }
         } else {
-            return "redirect:/order/checkOut";
+            System.out.println("<script>Alert('Masuk Ke Data Kosong...');</script>");
+            return "redirect:/products";
+//            return "redirect:/order/checkOut";
         }
         session.setAttribute("temp", list);
         return link;
